@@ -9,12 +9,12 @@ namespace Lesson1
     class Program
     {
         /// <summary>
-        /// Реализация домашнего задания по курсу Алгоритмы и структуры данных
+        /// Реализация домашнего задания Урок 1 по курсу Алгоритмы и структуры данных
         /// </summary>
         static void Main()
         {
             Console.Clear();
-            Console.WriteLine("В данной программе реализованы ДЗ по курсу Алгоритмы и структуры данных.");
+            Console.WriteLine("В данной программе реализованы ДЗ по Уроку 1. Курс Алгоритмы и структуры данных.");
             Console.WriteLine("Выберите номер задания. 1 или 3");
 
             int exercise = Convert.ToInt32(Console.ReadLine());
