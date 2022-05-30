@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace AlgorithmCourse
 {
@@ -17,13 +20,21 @@ namespace AlgorithmCourse
 
             switch(numLesson)
             {
-                case 1:
+                case 1: // Вызов решения Урок №1
                     Lesson1 lesson1 = new Lesson1();
                     lesson1.Start();
                     break;
-                case 2:
+                case 2: // Вызов решения Урок №2
                     Lesson2 lesson2 = new Lesson2();
                     lesson2.Start();
+                    break;
+                case 3: // Вызов решения Урок №3
+                    Lesson3 lesson3 = new Lesson3();
+                    lesson3.Start();
+                    break;
+                case 4: // Вызов решения Урок №4
+                    Lesson4 lesson4 = new Lesson4();
+                    lesson4.Start();
                     break;
             }
         }
@@ -387,4 +398,351 @@ namespace AlgorithmCourse
             }
         }
     }
+
+    public class Lesson3
+    {
+        Random rnd = new Random(); // Вызов класса генератора случайных чисел произведен
+                                   // тут для того, чтобы числа при каждом вызове были разные.
+        public void Start()
+        {
+            Stopwatch sw1 = new Stopwatch();
+            sw1.Start();
+            Stopwatch sw2 = new Stopwatch();
+            sw2.Start();
+
+            // Внесение в массив 4 случайных чисел для реализации класса
+            double[] arrClass = { GetRandom(), GetRandom(), GetRandom(), GetRandom() };
+            // Внесение в массив 4 случайных чисел для реализации структуры
+            double[] arrStruct = { GetRandom(), GetRandom(), GetRandom(), GetRandom() };
+
+            // Присвоение значений для класса
+            var pointOne = new PointClassDouble(arrClass[0], arrClass[1]);
+            var pointTwo = new PointClassDouble(arrClass[2], arrClass[3]);
+            // Присвоение значений для структуры
+            var pointone = new PointStructDouble(arrStruct[0], arrStruct[1]);
+            var pointtwo = new PointStructDouble(arrStruct[2], arrStruct[3]);
+
+            Console.Clear();
+
+            Console.WriteLine("Урок 3. Класс, структура и дистанция");
+            Console.WriteLine("При каждом новом запуске X и Y генерируются случайным образом");
+
+            // Расчет дистанции путем реализации класса
+            double resultClass = DistanceClass(pointOne, pointTwo);
+            sw1.Stop();
+            // Расчет дистанции путем реализации структуры
+            double resultStruct = DistanceStruct(pointone, pointtwo);
+            sw2.Stop();
+
+            Console.WriteLine($"\nРассточние между парой точек путем реализации класса: {resultClass}");
+            Console.WriteLine($"Время расчета: {sw1.Elapsed}");
+            Console.WriteLine($"\nРассточние между парой точек путем реализации структуры: {resultStruct}");
+            Console.WriteLine($"Время расчета: {sw2.Elapsed}");
+
+            Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Генерация случайного числа
+        /// </summary>
+        /// <returns>Случайное число в диапазоне от 1 до 999</returns>
+        public double GetRandom()
+        {
+            return rnd.Next(1, 999);
+        }
+
+        /// <summary>
+        /// Объявление параметров в классе
+        /// </summary>
+        public class PointClassDouble
+        {
+            public double X;
+            public double Y;
+            public PointClassDouble(double x, double y)
+            {
+                X = x;
+                Y = y;
+            }
+        }
+
+        /// <summary>
+        /// Метод возвращающий расстояние между парой точек. Реализованный в классе
+        /// </summary>
+        /// <param name="pointOne"></param>
+        /// <param name="pointTwo"></param>
+        /// <returns></returns>
+        static double DistanceClass(PointClassDouble pointOne, PointClassDouble pointTwo)
+        {
+            double x = pointOne.X - pointTwo.X;
+            double y = pointOne.X - pointTwo.X;
+            return Math.Sqrt((x * x) + (y * y));
+        }
+
+        /// <summary>
+        /// Объявление параметров в структуре
+        /// </summary>
+        public struct PointStructDouble
+        {
+            public double X;
+            public double Y;
+            public PointStructDouble(double x, double y)
+            {
+                X = x;
+                Y = y;
+            }
+        }
+
+        /// <summary>
+        /// Метод возвращающий расстояние между парой точек. Реализованный в структуре
+        /// </summary>
+        /// <param name="pointOne"></param>
+        /// <param name="pointTwo"></param>
+        /// <returns></returns>
+        static double DistanceStruct(PointStructDouble pointOne, PointStructDouble pointTwo)
+        {
+            double x = pointOne.X - pointTwo.X;
+            double y = pointOne.Y - pointTwo.Y;
+            return (x * x) + (y * y);
+        }
+    }
+
+    public class Lesson4
+    {
+        public void Start()
+        {
+            Console.Clear();
+
+            BinaryTree binaryTree = new BinaryTree();
+
+            // Добавление элементов в дерево
+            binaryTree.Add(1);
+            binaryTree.Add(2);
+            binaryTree.Add(7);
+            binaryTree.Add(3);
+            binaryTree.Add(10);
+            binaryTree.Add(5);
+            binaryTree.Add(8);
+
+            // Поиск элемента
+            Node<int> node = binaryTree.Find(5);
+
+            Console.WriteLine($"Найден элемент: {node.Data}");
+
+            Console.Write("Рекурсиный обход: ");
+            binaryTree.TraversePreOrder(binaryTree.Root);
+            Console.WriteLine();
+
+            Console.Write("Прямой обход: ");
+            binaryTree.TraverseInOrder(binaryTree.Root);
+            Console.WriteLine();
+
+            Console.Write("Центрированный обход: ");
+            binaryTree.TraversePostOrder(binaryTree.Root);
+            Console.WriteLine();
+
+            // Удаление элементов
+            binaryTree.Remove(7);
+            binaryTree.Remove(8);
+
+            Console.Write("Рекурсивный обход после удаления элементов: ");
+            binaryTree.TraversePreOrder(binaryTree.Root);
+            Console.WriteLine();
+
+            Console.ReadKey(true);
+        }
+
+        public class Node<T>
+        {
+            public T Data { get; set; }
+            public Node<T> Left { get; set; }
+            public Node<T> Right { get; set; }
+            public Node<T> Parent { get; set; }
+        }
+
+        /// <summary>
+        /// Двоичное дерево поиска
+        /// </summary>
+        class BinaryTree
+        {
+            public Node<int> Root { get; set; }
+
+            /// <summary>
+            /// Добавление элемента в дерево
+            /// </summary>
+            /// <param name="value">Добавляемое значение</param>
+            /// <returns></returns>
+            public bool Add(int value)
+            {
+                Node<int> before = null, after = this.Root;
+
+                while (after != null)
+                {
+                    before = after;
+                    if (value < after.Data) // Если узел в левой ветви
+                        after = after.Left;
+                    else if (value > after.Data) // Если узел в правом ветви
+                        after = after.Right;
+                    else
+                        return false; // Такое значение уже существует
+                }
+
+                Node<int> newNode = new Node<int>();
+
+                newNode.Data = value;
+
+                if (this.Root == null) // Если дерево пустое
+                    this.Root = newNode;
+                else
+                {
+                    if (value < before.Data)
+                        before.Left = newNode;
+                    else
+                        before.Right = newNode;
+                }
+
+                return true;
+            }
+
+            /// <summary>
+            /// Поиск элементов
+            /// </summary>
+            /// <param name="value">Искомое значение</param>
+            /// <returns></returns>
+            public Node<int> Find(int value)
+            {
+                return this.Find(value, this.Root);
+            }
+
+            /// <summary>
+            /// Удаление элемента
+            /// </summary>
+            /// <param name="value">Удаляемое значение</param>
+            public void Remove (int value)
+            {
+                this.Root = Remove(this.Root, value);
+            }
+
+            /// <summary>
+            /// Удаление элемента
+            /// </summary>
+            /// <param name="parent">Родитель</param>
+            /// <param name="key"></param>
+            /// <returns></returns>
+            public Node<int> Remove(Node<int> parent, int key)
+            {
+                if (parent == null) return parent;
+
+                if (key < parent.Data) parent.Left = Remove(parent.Left, key);
+                else if (key > parent.Data)
+                    parent.Right = Remove(parent.Right, key);
+                else // Если значение совпадает с родителем, то он удаляется
+                {  
+                    if (parent.Left == null) // Если справа нет сына
+                        return parent.Right;
+                    else if (parent.Right == null) // Если слева нет сына
+                        return parent.Left;
+                     
+                    parent.Data = MinValue(parent.Right); // Узел с двумя сыновьями: Получить преемника по порядку (наименьший в правом поддереве) 
+
+                    parent.Right = Remove(parent.Right, parent.Data); // Удалить преемника по порядку
+                }
+
+                return parent;
+            }
+
+            /// <summary>
+            /// Определение минимального значения
+            /// </summary>
+            /// <param name="node"></param>
+            /// <returns></returns>
+            public int MinValue(Node<int> node)
+            {
+                int minv = node.Data;
+
+                while (node.Left != null)
+                {
+                    minv = node.Left.Data;
+                    node = node.Left;
+                }
+
+                return minv;
+            }
+
+            /// <summary>
+            /// Поиск элемента
+            /// </summary>
+            /// <param name="value">Искомое значение</param>
+            /// <param name="parent">Родитель</param>
+            /// <returns></returns>
+            public Node<int> Find(int value, Node<int> parent)
+            {
+                if (parent != null)
+                {
+                    if (value == parent.Data) return parent;
+                    if (value < parent.Data)
+                        return Find(value, parent.Left);
+                    else
+                        return Find(value, parent.Right);
+                }
+
+                return null;
+            }
+
+            //public int GetTreeDepth()
+            //{
+            //    return this.GetTreeDepth(this.Root);
+            //}
+
+            //private int GetTreeDepth(Node<int> parent)
+            //{
+            //    return parent == null ? 0 : Math.Max(GetTreeDepth(parent.Left), GetTreeDepth(parent.Right)) + 1;
+            //}
+
+            /// <summary>
+            /// Рекурсивный обход
+            /// </summary>
+            /// <param name="parent"></param>
+            public void TraversePreOrder(Node<int> parent)
+            {
+                if (parent != null)
+                {
+                    Console.Write(parent.Data + " ");
+                    TraversePreOrder(parent.Left);
+                    TraversePreOrder(parent.Right);
+                }
+            }
+
+            /// <summary>
+            /// Прямой обход
+            /// </summary>
+            /// <param name="parent"></param>
+            public void TraverseInOrder(Node<int> parent)
+            {
+                if (parent != null)
+                {
+                    TraverseInOrder(parent.Left);
+                    Console.Write(parent.Data + " ");
+                    TraverseInOrder(parent.Right);
+                }
+            }
+
+            /// <summary>
+            /// Центрированный обход
+            /// </summary>
+            /// <param name="parent"></param>
+            public void TraversePostOrder(Node<int> parent)
+            {
+                if (parent != null)
+                {
+                    TraversePostOrder(parent.Left);
+                    TraversePostOrder(parent.Right);
+                    Console.Write(parent.Data + " ");
+                }
+            }
+        }
+     
+
+    }
+
+
 }
