@@ -252,6 +252,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lesson1.cs" />
+    <Compile Include="ILesson.cs" />
+    <Compile Include="Lesson2.cs" />
+    <Compile Include="Lesson3.cs" />
+    <Compile Include="Lesson4.cs" />
+    <Compile Include="Lesson5.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
